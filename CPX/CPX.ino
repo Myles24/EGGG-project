@@ -10,22 +10,30 @@ void setup() {
 }
 
 void loop() {
-  float x = CircuitPlayground.motionX();
-  float y = CircuitPlayground.motionY();
-  float z = CircuitPlayground.motionZ();
-
-  // Calculate movement field
-  float movement = sqrt(x ** 2 + y ** 2 + z ** 2);
-  Serial.println(movement);
-  
-
-  // Check if movement exceeds a threshold
-  if (movement > 14) { 
-    // Play a tone if movement is detected
-    CircuitPlayground.playTone(262, 500); // Play a middle C note for 500ms
-    delay(1000); // Delay to avoid multiple sounds at once
+  if (CircuitPlayground.mic.soundPressureLevel(10)){
+    turned_on();
   }
 
-  delay(100); 
 }
 
+void turned_on(){
+  while (true){
+    float x = CircuitPlayground.motionX();
+    float y = CircuitPlayground.motionY();
+    float z = CircuitPlayground.motionZ();
+
+    // Calculate movement field
+    float movement = sqrt(x * x + y * y + z * z) - 10;
+    Serial.println(movement);
+    
+
+    // Check if movement exceeds a threshold
+    if (movement > 4) { 
+      // Play a tone if movement is detected
+      CircuitPlayground.playTone(262, 500); // Play a middle C note for 500ms
+      delay(1000); // Delay to avoid multiple sounds at once
+    }
+
+    delay(50); 
+  }
+}

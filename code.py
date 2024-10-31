@@ -1,3 +1,6 @@
+# EGGG 101 Group 322
+# CPX will light up and play a sound when dropped
+
 import board, digitalio, time, adafruit_lis3dh, math, busio, neopixel
 
 # Nonsense from the tutorial I had to use bc bad documentation
